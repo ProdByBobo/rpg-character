@@ -20,6 +20,7 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
+    this._data = "https://www.psu.edu/";
     this.title = "";
     this.t = this.t || {};
     this.t = {
@@ -33,6 +34,10 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
         "/../",
       locales: ["ar", "es", "hi", "zh"],
     });
+  }
+  get data( )
+  {
+    return this._data;
   }
 
   // Lit reactive properties
