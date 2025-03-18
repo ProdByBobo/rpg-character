@@ -1,7 +1,4 @@
-/**
- * Copyright 2025 ProdByBobo
- * @license Apache-2.0, see LICENSE for full text.
- */
+
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
@@ -20,10 +17,7 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
-    this._data = "https://www.psu.edu/";
-    this.title = "RPG Characters";
-    this.header = "RPG Character"
-    this.header = "Character Count"
+    this.title = "";
     this.t = this.t || {};
     this.t = {
       ...this.t,
@@ -36,10 +30,6 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
         "/../",
       locales: ["ar", "es", "hi", "zh"],
     });
-  }
-  get data( )
-  {
-    return this._data;
   }
 
   // Lit reactive properties
@@ -79,9 +69,7 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
 </div>`;
   }
 
-  /**
-   * haxProperties integration via file reference
-   */
+ 
   static get haxProperties() {
     return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url)
       .href;

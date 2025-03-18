@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <h1>Project 1</h1>
   <base href="/">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -15,37 +16,49 @@
     #demo {
       margin: var(--ddd-spacing-2);
     }
-    rpg-character {
+    .character-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--ddd-spacing-2);
       margin: var(--ddd-spacing-2);
       border: var(--ddd-border-md);
       border-radius: var(--ddd-radius-lg);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s, transform 0.5s;
     }
-    .character-wrapper {
-      display: inline-block;
-      text-align: center;
-      margin: var(--ddd-spacing-2);
+    .character-wrapper.show {
+      opacity: 1;
+      transform: translateY(0);
     }
     .character-wrapper a {
-      display: block;
-      margin-top: var(--ddd-spacing-1);
+      margin-top: var(--ddd-spacing-2);
+      margin-bottom: var(--ddd-spacing-4); 
       text-decoration: none;
       color: inherit;
     }
+    #fetch-contributors {
+      margin-bottom: var(--ddd-spacing-100); 
+    }
     #character-count {
-      margin: var(--ddd-spacing-2);
+      margin: var(--ddd-spacing-2) 0; 
       font-weight: bold;
     }
     #character-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(8, 1fr);
       gap: var(--ddd-spacing-2);
     }
   </style>
 </head>
 <body>
-  <button id="fetch-contributors">Fetch Contributors</button>
-  <h1>Project 1</h1>
-  <div id="character-count"></div>
+  <div id="fetch-contributors-container">
+    <button id="fetch-contributors">Fetch Contributors</button>
+  </div>
+  <div id="character-count-container">
+    <div id="character-count"></div>
+  </div>
   <div id="character-container"></div>
 
   <script type="module" src="https://cdn.hax.cloud/cdn/build/es6/node_modules/@haxtheweb/rpg-character/rpg-character.js"></script>
@@ -82,6 +95,11 @@
               characterWrapper.appendChild(newCharacter);
               characterWrapper.appendChild(usernameLink);
               characterContainer.appendChild(characterWrapper);
+
+              // Trigger animation
+              requestAnimationFrame(() => {
+                characterWrapper.classList.add('show');
+              });
             }
           });
           characterCount.textContent = `Character Count: ${addedContributors.size}`;
@@ -103,6 +121,11 @@
               characterWrapper.appendChild(newCharacter);
               characterWrapper.appendChild(usernameLink);
               characterContainer.appendChild(characterWrapper);
+
+              // Trigger animation
+              requestAnimationFrame(() => {
+                characterWrapper.classList.add('show');
+              });
             }
           });
           characterCount.textContent = `Character Count: ${addedContributors.size}`;
