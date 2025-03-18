@@ -35,10 +35,16 @@
       margin: var(--ddd-spacing-2);
       font-weight: bold;
     }
+    #character-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: var(--ddd-spacing-2);
+    }
   </style>
 </head>
 <body>
   <button id="fetch-contributors">Fetch Contributors</button>
+  <h1>Project 1</h1>
   <div id="character-count"></div>
   <div id="character-container"></div>
 
@@ -57,7 +63,7 @@
         const characterCount = document.getElementById('character-count');
         
         if (initialLoad) {
-          characterContainer.innerHTML = ''; // Clear existing characters
+          characterContainer.innerHTML = ''; 
           const topContributors = contributors.filter(contributor => !contributor.login.includes('[bot]')).slice(0, 6);
           topContributors.forEach(contributor => {
             if (!addedContributors.has(contributor.login)) {
