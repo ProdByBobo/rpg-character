@@ -22,7 +22,8 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
     super();
     this._data = "https://www.psu.edu/";
     this.title = "RPG Characters";
-    this.header = ""
+    this.header = "RPG Character"
+    this.header = "Character Count"
     this.t = this.t || {};
     this.t = {
       ...this.t,
