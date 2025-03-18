@@ -31,24 +31,22 @@
       text-decoration: none;
       color: inherit;
     }
+    #character-count {
+      margin: var(--ddd-spacing-2);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <button id="fetch-contributors">Fetch Contributors</button>
-
-  <div id="character-container">
-    <rpg-character seed="btopro"></rpg-character>
-    <rpg-character seed="anothername"></rpg-character>
-    <rpg-character seed="yertasd298fu28j82"></rpg-character>
-    <rpg-character seed="ff2232"></rpg-character>
-    <rpg-character seed="885322"></rpg-character>
-    <rpg-character seed="827390"></rpg-character>
-    <rpg-character seed="yertasd298fu28j82" hat="construction"></rpg-character>
-  </div>
+  <div id="character-count"></div>
+  <div id="character-container"></div>
 
   <script type="module" src="https://cdn.hax.cloud/cdn/build/es6/node_modules/@haxtheweb/rpg-character/rpg-character.js"></script>
   <script>
-    document.getElementById('fetch-contributors').addEventListener('click', async () => {
+    const addedContributors = new Set();
+
+    async function fetchAndDisplayContributors(initialLoad = false) {
       try {
         const response = await fetch('https://api.github.com/repos/haxtheweb/webcomponents/contributors');
         if (!response.ok) {
@@ -56,27 +54,61 @@
         }
         const contributors = await response.json();
         const characterContainer = document.getElementById('character-container');
-        characterContainer.innerHTML = ''; // Clear existing characters
-        contributors.forEach(contributor => {
-          const characterWrapper = document.createElement('div');
-          characterWrapper.className = 'character-wrapper';
+        const characterCount = document.getElementById('character-count');
+        
+        if (initialLoad) {
+          characterContainer.innerHTML = ''; // Clear existing characters
+          const topContributors = contributors.filter(contributor => !contributor.login.includes('[bot]')).slice(0, 6);
+          topContributors.forEach(contributor => {
+            if (!addedContributors.has(contributor.login)) {
+              addedContributors.add(contributor.login);
+              const characterWrapper = document.createElement('div');
+              characterWrapper.className = 'character-wrapper';
 
-          const newCharacter = document.createElement('rpg-character');
-          newCharacter.setAttribute('seed', contributor.login);
+              const newCharacter = document.createElement('rpg-character');
+              newCharacter.setAttribute('seed', contributor.login);
 
-          const usernameLink = document.createElement('a');
-          usernameLink.href = contributor.html_url;
-          usernameLink.target = '_blank';
-          usernameLink.textContent = contributor.login;
+              const usernameLink = document.createElement('a');
+              usernameLink.href = contributor.html_url;
+              usernameLink.target = '_blank';
+              usernameLink.textContent = contributor.login;
 
-          characterWrapper.appendChild(newCharacter);
-          characterWrapper.appendChild(usernameLink);
-          characterContainer.appendChild(characterWrapper);
-        });
+              characterWrapper.appendChild(newCharacter);
+              characterWrapper.appendChild(usernameLink);
+              characterContainer.appendChild(characterWrapper);
+            }
+          });
+          characterCount.textContent = `Character Count: ${addedContributors.size}`;
+        } else {
+          contributors.filter(contributor => !contributor.login.includes('[bot]')).forEach(contributor => {
+            if (addedContributors.size < 24 && !addedContributors.has(contributor.login)) {
+              addedContributors.add(contributor.login);
+              const characterWrapper = document.createElement('div');
+              characterWrapper.className = 'character-wrapper';
+
+              const newCharacter = document.createElement('rpg-character');
+              newCharacter.setAttribute('seed', contributor.login);
+
+              const usernameLink = document.createElement('a');
+              usernameLink.href = contributor.html_url;
+              usernameLink.target = '_blank';
+              usernameLink.textContent = contributor.login;
+
+              characterWrapper.appendChild(newCharacter);
+              characterWrapper.appendChild(usernameLink);
+              characterContainer.appendChild(characterWrapper);
+            }
+          });
+          characterCount.textContent = `Character Count: ${addedContributors.size}`;
+        }
       } catch (error) {
         console.error('Error fetching contributors:', error);
       }
-    });
+    }
+
+    document.getElementById('fetch-contributors').addEventListener('click', () => fetchAndDisplayContributors(false));
+
+    fetchAndDisplayContributors(true);
   </script>
 </body>
 </html>
