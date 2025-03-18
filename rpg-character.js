@@ -27,6 +27,7 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
       ...this.t,
       title: "Title",
     };
+    this.limit = 20;
     this.registerLocalization({
       context: this,
       localesPath:
