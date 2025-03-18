@@ -22,12 +22,15 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
     super();
     this._data = "https://www.psu.edu/";
     this.title = "RPG Characters";
+<<<<<<< HEAD
+=======
+    this.header = ""
+>>>>>>> 97b0fb75a5f764101eccb1db65957e6a22e3a8a5
     this.t = this.t || {};
     this.t = {
       ...this.t,
       title: "Title",
     };
-    this.limit = 20;
     this.registerLocalization({
       context: this,
       localesPath:
