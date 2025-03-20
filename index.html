@@ -21,14 +21,10 @@
       flex-direction: column;
       align-items: center;
       padding: var(--ddd-spacing-6);
-      margin: var(--ddd-spacing-2);
+      margin: var(--ddd-spacing-6);
+      margin-bottom: var(--ddd-spacing-6); /* Add a larger bottom margin */
       border: var(--ddd-border-md);
       border-radius: var(--ddd-radius-lg);
-      opacity: 0;
-    }
-    .character-wrapper.show {
-      opacity: 1;
-      transform: translateY(0);
     }
     .character-wrapper a {
       margin-top: var(--ddd-spacing-2);
@@ -46,8 +42,11 @@
     #character-container {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
-      gap: var(--ddd-spacing-2);
+      gap: var(--ddd-spacing-4);
     }
+    #character-container > * {
+  margin-bottom: var(--ddd-spacing-8); /* Add a larger bottom margin between characters */
+}
   </style>
 </head>
 <body>
